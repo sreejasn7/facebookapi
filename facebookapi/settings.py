@@ -25,18 +25,21 @@ SECRET_KEY = 'k!iw-vhog1l+e99y06ucw3lg*^)_!+po$8s@bifio-wo!2(6rp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Set to Star for the time being. Need to change it to valid hosts later on
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'apis.apps.ApisConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
