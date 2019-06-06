@@ -23,7 +23,7 @@ def index(request):
 class UserList(generics.ListAPIView):
     """
     :description: List total users.
-    :url:ps_id_list/
+    :url:PSID_list/
     """
     queryset = MessengerUser.objects.all()
     serializer_class = UserSerializer
@@ -77,22 +77,25 @@ class FileUploadJson(APIView):
             return Response({"error": e}, status=400)
 
 
-class PsidPageMap(generics.ListAPIView):
+class PSIDPageMap(generics.ListAPIView):
     """
-    :description: If the page .
-    :url: /
+    :description: Check if user and page mapping exists
+    :url: PSID_page_map/
     """
     serializer_class = FacebookLabelSerializer
     queryset = FacebookLabel.objects.all()
 
     def post(self, request):
+        """
+        :param request:owner, page
+        :return:Response - status True & owner and page if owner with page exits  , else None
+        """
         if request.method == 'POST':
-            print(self.request.POST["owner"])
             queryset = FacebookLabel.objects.filter(owner__pk=self.request.POST["owner"],
                                                 page__pk=self.request.POST['page'])
             queryset_js = FacebookLabelSerializer(queryset, many=True)
             if queryset_js.data:
-                return Response({"status": True, 'result':queryset_js.data})
+                return Response({"status": True, 'result':queryset_js.data}, status=200)
             else:
-                return Response({"status": False,'result':None})
+                return Response({"status": False,'result':None}, status=200)
 
