@@ -31,7 +31,7 @@ class UserList(generics.ListAPIView):
 
 class FileUploadCSV(APIView):
     """
-    :description: FileUploadCSV to upload CSV files using django rest framework
+    :description: FileUploadCSV to upload CSV files
     :url: upload_csv/
     """
     parser_classes = (MultiPartParser,)
@@ -91,8 +91,8 @@ class PSIDPageMap(generics.ListAPIView):
         :return:Response - status True & owner and page if owner with page exits  , else None
         """
         if request.method == 'POST':
-            queryset = FacebookLabel.objects.filter(owner__pk=self.request.POST["owner"],
-                                                page__pk=self.request.POST['page'])
+            queryset = FacebookLabel.objects.filter(owner__pk=self.request.POST["owner"],\
+                                                    page__pk=self.request.POST['page'])
             queryset_js = FacebookLabelSerializer(queryset, many=True)
             if queryset_js.data:
                 return Response({"status": True, 'result':queryset_js.data}, status=200)
