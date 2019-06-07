@@ -52,13 +52,13 @@ It uses the `list` function to get the paginated data and use the paginated data
     
     
 ## Work Flows
-    * Upload PSID using either psid.json or psids.csv (these files are in the project main folder attached )by using the api urls upload_csv/ or upload_csv/. This will be saved to MessengerUser model.
-    * Create some rough entries in FacebookPage. 
-    * Map some users to pages in FacebookLabel. 
-    * Try the functionality 
-        * Assume there's an api for fetching the users by user id (psid) and page id. The response should contain a list of missing users (the user api will return None if user is not found) ||   URL is `PSID_page_map`
-        * For associating labels, we need to use facebook batch api to send bulk requests (our api will allow a configurable max number of users). ||  URL is `PSID_list_pages`
-        * The facebook batch mechanism needs to be reusable for other purposes. || Function is `batch_mechanism_curl`
-        * There should be 2 versions of the api, one which takes a json and one which accepts a csv file upload (which will only contain lines with user ids). || Functions are `FileUploadCSV` & `FileUploadJSON`
-        * How would you handle, if we need to support a very large number of users in the api? ||  By using Pagination and only sending requests to FB which resulted in paginated data. || Class used is `LargeUserSetPagination`
+  * Upload PSID using either psid.json or psids.csv (these files are in the project main folder attached )by using the api urls upload_csv/ or upload_csv/. This will be saved to MessengerUser model.
+  * Create some rough entries in FacebookPage. 
+  * Map some users to pages in FacebookLabel. 
+  * Try the functionalities mentioned in test task file in the project
+      * Assume there's an api for fetching the users by user id (psid) and page id. The response should contain a list of missing users (the user api will return None if user is not found) ||   URL is `PSID_page_map`
+      * For associating labels, we need to use facebook batch api to send bulk requests (our api will allow a configurable max number of users). ||  URL is `PSID_list_pages`
+      * The facebook batch mechanism needs to be reusable for other purposes. || Function is `batch_mechanism_curl`
+      * There should be 2 versions of the api, one which takes a json and one which accepts a csv file upload (which will only contain lines with user ids). || Functions are `FileUploadCSV` & `FileUploadJSON`
+      * How would you handle, if we need to support a very large number of users in the api? ||  By using Pagination and only sending requests to FB which resulted in paginated data. || Class used is `LargeUserSetPagination`
    
