@@ -1,14 +1,20 @@
-# facebookapi
+## FACEBOOK API
 1. Install requirements.txt
 
-2. Models 
+## FILES
+
+1. Models 
    * MessengerUser , FacebookPage , FacebookLabel 
    * page : models.py
    
-3. Serializers Used
+2. Serializers Used
    * UserSerializer
    * FacebookLabelSerializer
    * FacebookLabelRelatedSerializer
-4. Pagination
+3. Pagination
+   * LargeUserSetPagination - Used for Handling Large Bulk Data 
+   * Page Size set to 2
+   * This determines  actually max number of users configurable from API
+   
 
    
