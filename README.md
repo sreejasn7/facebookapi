@@ -38,6 +38,7 @@
     * function - batch_mechanism_requests ,  is calling urls via python requests. This is not currently used in application
     * function - batch_mechanism_curl , is calling urls via python pycurl. This is the one used currently.
     * function -  organize_bulk_fb_data , is used to rearrange the data to post to fabebook
+    * page : logics.py
     
 5. Views
     * index - Renders a simple string. The application is running on http://127.0.0.1:8000/ then , response will be "Hello There !!!. You  are running your application."
