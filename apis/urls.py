@@ -1,3 +1,8 @@
+__author__ = ""
+__copyright__ = ""
+__maintainer__ = ""
+__version__ = ""
+
 from django.conf.urls import url
 from .views import UserList , FileUploadCSV , FileUploadJSON, PSIDPageMap, FacebookLabelPagination
 from . import views

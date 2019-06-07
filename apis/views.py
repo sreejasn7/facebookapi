@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+__author__ = ""
+__copyright__ = ""
+__maintainer__ = ""
+__version__ = ""
+
 from .serializers import UserSerializer, FacebookLabelSerializer, FacebookLabelRelatedSerializer
 from .models import MessengerUser , FacebookLabel, FacebookPage
 from rest_framework.views import APIView

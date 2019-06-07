@@ -1,3 +1,8 @@
+__author__ = ""
+__copyright__ = ""
+__maintainer__ = ""
+__version__ = ""
+
 from rest_framework import serializers
 from .models import MessengerUser,FacebookLabel,FacebookPage
 

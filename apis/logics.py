@@ -1,3 +1,8 @@
+__author__ = ""
+__copyright__ = ""
+__maintainer__ = ""
+__version__ = ""
+
 import requests
 import pycurl
 from io import BytesIO
