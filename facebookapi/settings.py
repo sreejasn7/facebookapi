@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k!iw-vhog1l+e99y06ucw3lg*^)_!+po$8s@bifio-wo!2(6rp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Set to Star for the time being. Need to change it to valid hosts later on
 ALLOWED_HOSTS = ['*']

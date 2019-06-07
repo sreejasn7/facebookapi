@@ -12,3 +12,12 @@ class FacebookLabelSerializer(serializers.ModelSerializer):
     class Meta:
         model = FacebookLabel
         fields = ('owner', 'page',)
+
+
+class FacebookLabelRelatedSerializer(serializers.ModelSerializer):
+    access_token = serializers.ReadOnlyField(source='page.access_token', read_only=True)
+    user = serializers.ReadOnlyField(source='owner.ps_id', read_only=True)
+
+    class Meta:
+        model = FacebookLabel
+        fields = ('owner', 'page', 'label_id', 'access_token', 'user',)

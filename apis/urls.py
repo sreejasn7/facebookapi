@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import UserList , FileUploadCSV , FileUploadJSON, PSIDPageMap , UserListPagination
+from .views import UserList , FileUploadCSV , FileUploadJSON, PSIDPageMap, UserListPagination
 from . import views
 
 urlpatterns = [

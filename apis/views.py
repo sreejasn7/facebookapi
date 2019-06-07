@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .serializers import UserSerializer, FacebookLabelSerializer
-from .models import MessengerUser , FacebookLabel
+from .serializers import UserSerializer, FacebookLabelSerializer, FacebookLabelRelatedSerializer
+from .models import MessengerUser , FacebookLabel, FacebookPage
 from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser , MultiPartParser , JSONParser
 from django.http import HttpResponse, JsonResponse
@@ -9,7 +9,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 import json
 from .pagination import LargeUserSetPagination
-from .logics import batch_mechanism_curl
+from .logics import organize_bulk_fb_data
 
 
 def index(request):
@@ -107,8 +107,8 @@ class UserListPagination(generics.ListAPIView):
     :description: List total users in pagination , Use this paginated users to send bulk requests.
     :url: PSID_list_pages/
     """
-    queryset = MessengerUser.objects.all()
-    serializer_class = UserSerializer
+    queryset = FacebookLabel.objects.all()
+    serializer_class = FacebookLabelRelatedSerializer
     pagination_class = LargeUserSetPagination
 
     def list(self, request, *args, **kwargs):
@@ -117,9 +117,14 @@ class UserListPagination(generics.ListAPIView):
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
-            print("response from page >", serializer.data)
-
+            organize_bulk_fb_data(serializer.data)
             return self.get_paginated_response(serializer.data)
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+
+
+
+

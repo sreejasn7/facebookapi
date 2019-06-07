@@ -73,10 +73,6 @@ def batch_mechanism_curl(url, method, post_data={}, get_params={}, headers=['Acc
         return response_code, json.loads(body.decode('iso-8859-1'))
 
     elif method == "post":
-
-        # if len(form_content) > 0:
-        #     c.setopt(pycurl.HTTPPOST, form_content)
-
         c.setopt(c.POSTFIELDS,  urlencode(post_data))
         c.perform()
         body = buffer.getvalue()
@@ -88,3 +84,35 @@ def batch_mechanism_curl(url, method, post_data={}, get_params={}, headers=['Acc
         return response_code, json.loads(body.decode('iso-8859-1'))
 
 
+def organize_bulk_fb_data(data):
+    """
+    :param data: Data is a list of Ordered Dict with keys owner , page , label_id and access token
+    :sample data format :
+
+     OrderedDict([('owner', 1), ('page', 1), ('label_id', u''), \
+     ('access_token', u'3294790573450794350354083450'), \
+     ('user', u'kerlkwhe9759345flkg04365gkhdsglsdgkdsfg,dfg074097 03 -03476')])
+
+    :return: No Response
+    """
+    consolidate_data = {}
+    post_data = {}
+    label_data={}
+    print("response from page >", data)
+    for i in data:
+        if i['access_token'] not in consolidate_data:
+            consolidate_data[i['access_token']]=[]
+            label_data[i['access_token']] = []
+
+        consolidate_data[i['access_token']].append(i['user'])
+        label_data[i['access_token']].append(i['label_id'])
+
+    for key in consolidate_data:
+        post_data['access_token'] = key
+        post_data['batch'] = []
+        for i, val in enumerate(consolidate_data[key]):
+            relative_url = "/"+label_data[key][i]+'/label?access_token='+key
+            body = urlencode({'user': val})
+            post_data['batch'].append({"method": "POST", "relative_url": relative_url, "body": body})
+            response = batch_mechanism_curl('https://graph.facebook.com', 'post', post_data)
+            print("BULK RESPONSE FROM FB ", response)
