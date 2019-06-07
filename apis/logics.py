@@ -95,24 +95,27 @@ def organize_bulk_fb_data(data):
 
     :return: No Response
     """
-    consolidate_data = {}
-    post_data = {}
-    label_data={}
-    print("response from page >", data)
-    for i in data:
-        if i['access_token'] not in consolidate_data:
-            consolidate_data[i['access_token']]=[]
-            label_data[i['access_token']] = []
+    try:
+        consolidate_data = {}
+        post_data = {}
+        label_data={}
+        for i in data:
+            if i['access_token'] not in consolidate_data:
+                consolidate_data[i['access_token']]=[]
+                label_data[i['access_token']] = []
 
-        consolidate_data[i['access_token']].append(i['user'])
-        label_data[i['access_token']].append(i['label_id'])
+            consolidate_data[i['access_token']].append(i['user'])
+            label_data[i['access_token']].append(i['label_id'])
 
-    for key in consolidate_data:
-        post_data['access_token'] = key
-        post_data['batch'] = []
-        for i, val in enumerate(consolidate_data[key]):
-            relative_url = "/"+label_data[key][i]+'/label?access_token='+key
-            body = urlencode({'user': val})
-            post_data['batch'].append({"method": "POST", "relative_url": relative_url, "body": body})
-            response = batch_mechanism_curl('https://graph.facebook.com', 'post', post_data)
-            print("BULK RESPONSE FROM FB ", response)
+        for key in consolidate_data:
+            post_data['access_token'] = key
+            post_data['batch'] = []
+            for i, val in enumerate(consolidate_data[key]):
+                relative_url = "/"+label_data[key][i]+'/label?access_token='+key
+                body = urlencode({'user': val})
+                post_data['batch'].append({"method": "POST", "relative_url": relative_url, "body": body})
+                response = batch_mechanism_curl('https://graph.facebook.com', 'post', post_data)
+                print("BULK RESPONSE FROM FB ", response)
+
+    except Exception as e:
+        print("Error ", e)

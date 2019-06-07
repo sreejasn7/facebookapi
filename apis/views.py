@@ -102,7 +102,7 @@ class PSIDPageMap(generics.ListAPIView):
                 return Response({"status": False, 'result': None}, status=200)
 
 
-class UserListPagination(generics.ListAPIView):
+class FacebookLabelPagination(generics.ListAPIView):
     """
     :description: List total users in pagination , Use this paginated users to send bulk requests.
     :url: PSID_list_pages/
