@@ -8,7 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework import generics
 from rest_framework.response import Response
 import json
-
+from .pagination import LargeUserSetPagination
 
 def index(request):
     """
@@ -23,7 +23,7 @@ def index(request):
 class UserList(generics.ListAPIView):
     """
     :description: List total users.
-    :url:PSID_list/
+    :url: PSID_list/
     """
     queryset = MessengerUser.objects.all()
     serializer_class = UserSerializer
@@ -54,7 +54,7 @@ class FileUploadCSV(APIView):
             return Response({"error": e}, status=400)
 
 
-class FileUploadJson(APIView):
+class FileUploadJSON(APIView):
     """
     :description: FileUploadJson to upload JSON files using django rest framework
     :url: upload_json/
@@ -99,3 +99,25 @@ class PSIDPageMap(generics.ListAPIView):
             else:
                 return Response({"status": False,'result':None}, status=200)
 
+
+class UserListPagination(generics.ListAPIView):
+    """
+    :description: List total users in pagination , Use this paginated users to send bulk requests.
+    :url: PSID_list_pages/
+    """
+    queryset = MessengerUser.objects.all()
+    serializer_class = UserSerializer
+    pagination_class = LargeUserSetPagination
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            #print("response from page >", serializer.data)
+
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
